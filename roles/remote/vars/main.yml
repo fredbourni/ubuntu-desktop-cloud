@@ -1,0 +1,5 @@
+--- # roles/remote/vars/main.yml
+
+main_user_update_pass: on_create
+reboot: true
+timezone: UTC

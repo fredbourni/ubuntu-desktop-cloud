@@ -1,0 +1,36 @@
+# roles/remote/tasks/user.yml
+
+- name: Check if the remote user exists
+  command: "id -u name"
+  register: remoteuser_check
+  changed_when: false
+  ignore_errors: true
+- name: "Add remote user"
+  user:
+    name: "{{ main_user }}"
+    shell: /bin/bash
+    append: true
+    groups:
+      - sudo
+      - admin
+    password: "{{ main_pass|password_hash('sha512') }}"
+    update_password: "{{ main_user_update_pass }}"
+  when: "remoteuser_check.rc == 1"
+- name: Check if docker is installed
+  command: "which docker"
+  register: docker_check
+  changed_when: false
+  ignore_errors: true
+- name: "Add docker group to remote user"
+  user:
+    name: "{{ main_user }}"
+    append: true
+    groups:
+      - docker
+  when: "docker_check.rc == 0"
+- name: sudo no password
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'

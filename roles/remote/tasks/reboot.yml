@@ -1,0 +1,5 @@
+--- # roles/remote/tasks/reboot.yml
+
+- name: Reboot
+  reboot:
+  when: reboot

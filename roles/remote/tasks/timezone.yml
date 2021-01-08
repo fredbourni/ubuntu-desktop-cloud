@@ -1,0 +1,5 @@
+# roles/remote/tasks/timezone.yml
+
+- name: Change timezone
+  become: true
+  command: timedatectl set-timezone {{ timezone }}

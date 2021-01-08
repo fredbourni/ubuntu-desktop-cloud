@@ -1,0 +1,52 @@
+--- # roles/remote/tasks/packages.yml
+
+- name: Update cache
+  apt:
+    update_cache: true
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+- name: Install apt packages
+  apt:
+    pkg:
+      - curl
+      - dconf-editor
+      - docker-compose
+      - docker.io
+      - ffmpeg
+      - filezilla
+      - gcc
+      - git
+      - git-flow
+      - gnome-tweaks
+      - locate
+      - make
+      - meld
+      - nethogs
+      - net-tools
+      - python3-pip
+      - terminator
+      - ubuntu-desktop
+      - vim
+      - wget
+- name: Remove few apt unused packages
+  apt:
+    pkg:
+      - libreoffice-*
+      - thunderbird
+    state: absent
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: true
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: true
+- name: Install snap packages
+  community.general.snap:
+    name:
+      - code
+      - pycharm-community
+      - p7zip-desktop
+      - dbeaver-ce
+    classic: true

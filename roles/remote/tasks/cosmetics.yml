@@ -1,0 +1,25 @@
+--- # roles/remote/tasks/cosmetics.yml
+
+- name: Change gnome settings
+  become: true
+  become_user: "{{ main_user }}"
+  shell: |
+    gs="dbus-launch gsettings set"
+    pic='file:///usr/share/backgrounds/ubuntu-default-greyscale-wallpaper.png'
+    $gs org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 16
+    $gs org.gnome.Terminal.Legacy.Settings theme-variant 'dark'
+    $gs org.gnome.desktop.interface gtk-theme 'Yaru-dark'
+    $gs org.yorba.shotwell.preferences.ui use-dark-theme true
+    $gs org.gnome.desktop.background picture-uri "$pic"
+    $gs org.gnome.desktop.screensaver picture-uri "$pic"
+    $gs org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+    $gs org.gnome.desktop.screensaver lock-enabled false
+    $gs org.gnome.desktop.screensaver idle-activation-enabled false
+    $gs com.ubuntu.update-notifier show-livepatch-status-icon false
+    $gs com.ubuntu.update-notifier no-show-notifications true
+    $gs com.ubuntu.update-manager first-run false
+    $gs com.ubuntu.update-manager launch-count 1
+    $gs org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop',
+      'firefox.desktop', 'terminator.desktop', 'pycharm-community_pycharm-community.desktop', 'code_code.desktop']"
+  args:
+    executable: /bin/bash

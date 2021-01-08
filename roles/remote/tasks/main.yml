@@ -1,0 +1,27 @@
+--- # roles/remote/tasks/main.yml
+
+- name: Install packages
+  include: packages.yml
+  tags: package
+- name: Setup main user
+  include: user.yml
+  tags: user
+- name: Install nomachine and allow main user
+  include: nomachine.yml
+  tags: nomachine
+- name: Making gnome prettier
+  include: cosmetics.yml
+  tags: cosmetic
+- name: Bash fanciness and powertools
+  include: fanciness.yml
+  tags: package
+- name: Set timezone
+  include: timezone.yml
+  tags: time
+- name: Disable some services
+  include: services.yml
+  tags: service
+- name: Reboot after installation
+  include: reboot.yml
+  tags: reboot
+  when: reboot

@@ -1,0 +1,17 @@
+# roles/remote/tasks/packages.yml
+
+- name: Disable apt-daily
+  service:
+    name: apt-daily.timer
+    enabled: false
+- name: Disable apt daily upgrade
+  service:
+    name: apt-daily-upgrade.timer
+    enabled: false
+- name: Disable whoopsie
+  service:
+    name: whoopsie.service
+    enabled: false
+- name: Disable graphical target by default (let nomachine create the display)
+  command: systemctl set-default multi-user.target
+  become: true

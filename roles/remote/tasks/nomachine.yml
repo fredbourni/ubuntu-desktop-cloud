@@ -1,0 +1,19 @@
+--- # roles/remote/tasks/nomachine.yml
+
+- name: Check if nomachine is installed
+  command: dpkg-query -W nomachine
+  register: nomachine_check_installed
+  failed_when: nomachine_check_installed.rc > 1
+  changed_when: nomachine_check_installed.rc == 1
+- name: Download nomachine
+  get_url:
+    url: "https://download.nomachine.com/download/7.0/Linux/nomachine_7.0.211_4_amd64.deb"
+    dest: /tmp/nomachine.deb
+  when: nomachine_check_installed.rc == 1
+- name: Install nomachine
+  apt:
+    deb: /tmp/nomachine.deb
+  when: nomachine_check_installed.rc == 1
+- name: "Add main user as trusted nomachine one"
+  command: "/usr/NX/bin/nxserver --useradd {{ main_user }}"
+  when: nomachine_check_installed.rc == 1

@@ -1,0 +1,39 @@
+--- # roles/remote/tasks/fanciness.yml
+
+- name: Git clone
+  git:
+    repo: "https://github.com/Bash-it/bash-it.git"
+    dest: "/home/{{ main_user }}/.bash_it"
+    depth: 1
+  register: bashit_check
+  become_user: "{{ main_user }}"
+- name: Install bash-it
+  command: "/home/{{ main_user }}/.bash_it/install.sh --silent"
+  become_user: "{{ main_user }}"
+  when: bashit_check.changed
+- name: delete file
+  become: true
+  file:
+    state: absent
+    path: "/home/{{ main_user }}/.bashrc.bak"
+  when: bashit_check.changed
+- name: Enable bash-it components
+  become_user: "{{ main_user }}"
+  shell: |
+    bashnbl="/home/{{ main_user }}/.bash_it/install.sh enable"
+    yes | $bashnbl alias docker docker-compose git kubectl svn systemd terraform vim
+    yes | $bashnbl awscli composer docker docker-compose gcloud git git_flow helm kubectl ssh
+    yes | $bashnbl plugin alias-completion
+  args:
+    executable: /bin/bash
+  when: bashit_check.changed
+- name: Bash-it Theme
+  lineinfile:
+    path: "/home/{{ main_user }}/.bashrc"
+    regexp: '^export BASH_IT_THEME'
+    line: "export BASH_IT_THEME='iterate'"
+- name: SSH host check
+  lineinfile:
+    path: "/etc/ssh/ssh_config"
+    regexp: 'StrictHostKeyChecking '
+    line: "StrictHostKeyChecking no"
