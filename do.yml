@@ -1,0 +1,35 @@
+--- # DigitalOcean instance playbook
+
+- name: Create an instance
+  hosts: localhost
+  gather_facts: false
+  vars:
+    vm: "remote"
+    vm_size: "138" # 50GB Disk, 16GB RAM
+    vm_image: "ubuntu-20-04-x64"
+
+  tasks:
+    - name: Create a new droplet
+      digital_ocean_droplet:
+        state: present
+        name: "{{ vm }}"
+        size: "{{ vm_size }}"
+        region: "{{ region }}"
+        image: "{{ image }}"
+        wait_timeout: 500
+        ssh_keys:
+          - "{{ ssh_key_id }}"
+      register: instance
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ instance.data.ip_address }} port=22 delay=30 timeout=640
+
+    - name: Add host to groupname
+      add_host: hostname={{ instance.data.ip_address }} groupname=do_instances
+
+- name: Manage new instances
+  hosts: do_instances
+  connection: ssh
+  become: True
+  roles:
+    - remote
