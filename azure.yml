@@ -1,0 +1,117 @@
+--- # Azure instance playbook
+
+- name: Create an instance
+  connection: local
+  hosts: localhost
+  gather_facts: false
+  vars:
+    admin_user: "azadmin"
+    disk_size: 16
+    image_offer: "0001-com-ubuntu-server-focal"
+    image_publisher: "canonical"
+    image_sku: "20_04-lts-gen2"
+    image_version: "latest"
+    network_interface: "remotenic"
+    public_ip: "remotepublicip"
+    security_group: "remotesecgroup"
+    storage_type: "Standard_LRS"
+    subnet: "remotesubnet"
+    subnet_cidr: "10.10.0.0/24"
+    virtual_network: "remotevirtnet"
+    vm: "remotevm"
+    vm_size: "Standard_E2s_v3"
+
+
+  tasks:
+
+    - name: Create storage account
+      azure_rm_storageaccount:
+        resource_group: "{{ resource_group }}"
+        name: "{{ storage_account }}"
+        account_type: "{{ storage_type }}"
+
+    - name: Create virtual network
+      azure_rm_virtualnetwork:
+        resource_group: "{{ resource_group }}"
+        name: "{{ virtual_network }}"
+        address_prefixes: "{{ subnet_cidr }}"
+
+    - name: Add subnet
+      azure_rm_subnet:
+        resource_group: "{{ resource_group }}"
+        name: "{{ subnet }}"
+        address_prefix: "{{ subnet_cidr }}"
+        virtual_network: "{{ virtual_network }}"
+
+    - name: Create public ip
+      azure_rm_publicipaddress:
+        resource_group: "{{ resource_group }}"
+        allocation_method: Static
+        name: "{{ public_ip }}"
+      register: public_ip_info
+
+    - name: Create security group
+      azure_rm_securitygroup:
+        resource_group: "{{ resource_group }}"
+        name: "{{ security_group }}"
+        rules:
+          - name: SSH
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 101
+            direction: Inbound
+          - name: NomachineTCP
+            protocol: Tcp
+            destination_port_range: 4000
+            access: Allow
+            priority: 102
+            direction: Inbound
+          - name: NomachineUDP
+            protocol: Udp
+            destination_port_range: 4001
+            access: Allow
+            priority: 103
+            direction: Inbound
+
+    - name: Create NIC
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group }}"
+        name: "{{ network_interface }}"
+        virtual_network: "{{ virtual_network }}"
+        subnet: "{{ subnet }}"
+        public_ip_name: "{{ public_ip }}"
+        security_group: "{{ security_group }}"
+
+    - name: Create virtual machine
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vm }}"
+        vm_size: "{{ vm_size }}"
+        storage_account: "{{ storage_account }}"
+        admin_username: "{{ admin_user }}"
+        admin_password: "{{ main_pass }}"
+        ssh_public_keys:
+          - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
+            key_data: "{{ lookup('file', '{{ pub_key }}') }}"
+        network_interfaces: "{{ network_interface }}"
+        managed_disk_type: "{{ storage_type }}"
+        os_disk_size_gb: "{{ disk_size }}"
+        image:
+          offer: "{{ image_offer }}"
+          publisher: "{{ image_publisher }}"
+          sku: "{{ image_sku }}"
+          version: "{{ image_version }}"
+
+    - name: Add all instance public IPs to host group
+      add_host: hostname={{ public_ip_info.state.ip_address }} groups=az_instance
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ public_ip_info.state.ip_address }} port=22 delay=60 timeout=640 state=started
+
+- name: Manage new instances
+  hosts: az_instance
+  connection: ssh
+  become: True
+  roles:
+    - remote
