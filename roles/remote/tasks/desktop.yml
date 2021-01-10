@@ -1,0 +1,6 @@
+--- # roles/remote/tasks/desktop.yml
+
+- name: Install ubuntu desktop
+  apt:
+    pkg:
+      - ubuntu-desktop

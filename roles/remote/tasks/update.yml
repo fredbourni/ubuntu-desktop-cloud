@@ -1,0 +1,9 @@
+--- # roles/remote/tasks/update.yml
+
+- name: Update cache
+  apt:
+    update_cache: true
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
