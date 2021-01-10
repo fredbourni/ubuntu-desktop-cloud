@@ -1,12 +1,5 @@
 --- # roles/remote/tasks/packages.yml
 
-- name: Update cache
-  apt:
-    update_cache: true
-- name: Update all packages to their latest version
-  apt:
-    name: "*"
-    state: latest
 - name: Install apt packages
   apt:
     pkg:
@@ -27,7 +20,6 @@
       - net-tools
       - python3-pip
       - terminator
-      - ubuntu-desktop
       - vim
       - wget
 - name: Remove few apt unused packages

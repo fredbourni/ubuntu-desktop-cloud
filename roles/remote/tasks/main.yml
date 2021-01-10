@@ -1,5 +1,11 @@
 --- # roles/remote/tasks/main.yml
 
+- name: Update and upgrade
+  include: update.yml
+  tags: update
+- name: Install desktop
+  include: desktop.yml
+  tags: desktop
 - name: Install packages
   include: packages.yml
   tags: package
