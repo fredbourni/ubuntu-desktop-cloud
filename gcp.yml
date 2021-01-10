@@ -59,7 +59,7 @@
     - name: Create a instance
       gcp_compute_instance:
         state: present
-        name: "{{ remote }}"
+        name: "{{ vm }}"
         machine_type: "{{ vm_type }}"
         disks:
           - auto_delete: true
