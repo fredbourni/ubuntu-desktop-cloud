@@ -49,7 +49,7 @@ You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/mai
 
 ### Example
 ```
-ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a project=remote sa_key=service-account-key.json main_user=yourusername main_pass=p4ssw0rd"
+ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a project=remote sa_key=service-account-key.json main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
 ### Variables
@@ -87,7 +87,7 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 export AWS_ACCESS_KEY_ID='AAAA000AAAAAA0AAAAA0'
 export AWS_SECRET_ACCESS_KEY='aa0aaaa0aa00aaa00aa00a0aaa0aaaaaaaaa0aa0'
 
-ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-vars "region=ca-central-1 keypair=remote vpc_id=vpc-aa0000a0 main_user=yourusername main_pass=p4ssw0rd"
+ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-vars "region=ca-central-1 keypair=remote vpc_id=vpc-aa0000a0 main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
 ### Variables
@@ -124,7 +124,7 @@ export AZURE_SECRET='-secret-'
 export AZURE_SUBSCRIPTION_ID='000000aa-0aa0-0000-aa0a-a00a000000aa'
 export AZURE_TENANT='000a0aa0-0000-0a0a-aa0a-000a0aaaa00a'
 
-ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-vars "resource_group=remoterg storage_account=remotesa pub_key=~/.ssh/key.pub main_user=yourusername main_pass=p4ssw0rd"
+ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-vars "resource_group=remoterg storage_account=remotesa pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
 ### Variables
@@ -171,7 +171,7 @@ ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-va
 ```
 export DO_OAUTH_TOKEN='aaa0000000000a0a0a000a00aaa000aaaa0a0000a0a00aaa0a00a0000a000aaa'
 
-ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "region=tor1 main_user=yourusername main_pass=p4ssw0rd ssh_key_id=000000000"
+ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "region=tor1 ssh_key_id=000000000 main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
 ### Variables
