@@ -6,7 +6,7 @@
   vars:
     vm: "remote"
     vm_size: "138" # 50GB Disk, 16GB RAM
-    vm_image: "ubuntu-20-04-x64"
+    image: "ubuntu-20-04-x64"
 
   tasks:
     - name: Create a new droplet
