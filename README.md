@@ -42,8 +42,8 @@ You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/mai
 
 ### Requirements
 
-- [Python Google Authentication Library](https://pypi.org/project/google-auth/)
-- [Python HTTP requests library](https://pypi.org/project/requests/)
+- Python Google Authentication Library (`pip install google-auth`)
+- Python HTTP requests library (`pip install requests`)
 - [GCP project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 - [Service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) with proper permissions and JSON key 
 
@@ -79,6 +79,7 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 
 ### Requirements
 
+- Boto and Boto3 libraries (`pip install boto boto3`)
 - [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#prepare-key-pair)
 - [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html) (default one is OK)
 
