@@ -31,17 +31,19 @@ If you use this in a business environment, please pay for licenses and/or levera
 
 ## What if I do not like your specific set of packages?
 
-To get a default Ubuntu setup without any extra software installed, simply skip the _packages_ tag:
+To get a default Ubuntu setup without any extra software installed, simply skip the _package_ tag:
 ```
 ansible-playbook --skip-tags package [...]
 ```
 
-You may also skip any other tags in the [main tasks YAML file](roles/remote/tasks/main.yml) file. 
+You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/main.yml) file. 
 
 ## Google Cloud Platform (GCP)
 
 ### Requirements
 
+- [Python Google Authentication Library](https://pypi.org/project/google-auth/)
+- [Python HTTP requests library](https://pypi.org/project/requests/)
 - [GCP project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 - [Service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) with proper permissions and JSON key 
 
