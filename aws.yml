@@ -8,6 +8,7 @@
     image: "ami-02e44367276fe7adc"
     instance_type: "r5.large"
     security_group_name: "nomachine"
+    vm: "remote"
 
   tasks:
 
@@ -38,7 +39,8 @@
         image: "{{ image }}"
         instance_type: "{{ instance_type }}"
         keypair: "{{ keypair }}"
-        instance_tags: '{"Name":"vm-test"}'
+        instance_tags:
+          Name: "{{ vm }}"
         region: "{{ region }}"
         group: "{{ security_group_name }}"
         wait: true
