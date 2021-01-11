@@ -126,7 +126,7 @@ export AZURE_SECRET='-secret-'
 export AZURE_SUBSCRIPTION_ID='000000aa-0aa0-0000-aa0a-a00a000000aa'
 export AZURE_TENANT='000a0aa0-0000-0a0a-aa0a-000a0aaaa00a'
 
-ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-vars "resource_group=remoterg storage_account=remotesa pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd'"
+ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-vars "resource_group=remoterg storage_account=remotesa pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd#'"
 ```
 
 ### Variables
