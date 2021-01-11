@@ -114,6 +114,7 @@ ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-v
 
 ### Requirements
 
+- Azure Libraries (`pip install -r <(curl -s https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt)`)
 - [Resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups)
 - [Azure AD application and a service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
 - SSH public/private keys
