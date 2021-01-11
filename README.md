@@ -165,6 +165,7 @@ ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-va
 
 ### Requirements
 
+- Digitalocean collection (`ansible-galaxy collection install community.digitalocean`)
 - [Access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
 - [Account SSH keys](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)
 
