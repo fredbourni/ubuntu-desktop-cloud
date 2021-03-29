@@ -17,6 +17,7 @@ If you use this in a business environment, please pay for licenses and/or levera
 - Microsoft Azure
 - Google Cloud Platform
 - DigitalOcean
+- Linode
 
 ## How To
 
@@ -194,3 +195,37 @@ ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "re
 - **timezone** (timezone name, ex: America/Toronto)
 - **vm** (vm object name)
 - **vm_size** (vm size id)
+
+
+## Linode
+
+### Requirements
+
+- Python library for Linode API (`pip install linode_api4`)
+- [API access token](https://www.linode.com/docs/products/tools/linode-api/guides/get-access-token/)
+- SSH public/private keys
+
+### Example
+```
+export LINODE_ACCESS_TOKEN='00000aa00a00aaaa0a00a0a0aa0000a0aa0000aa000a0a0000000000aaa0aaa0'
+
+ansible-playbook linode.yml -v --user=root --private-key ~/.ssh/key --extra-vars "region=ca-central root_pass='r00tp4ss#' pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd#'"
+```
+
+### Variables
+
+#### Mandatory
+
+- **main_user** (main username)
+- **main_pass** (main user password)
+- **pub_key** (SSH public key file path)
+- **region** (Linode region)
+- **root_pass** (root user password)
+
+#### Optional
+
+- **image** (Linode image name)
+- **reboot** (skip reboot if set to false)  
+- **timezone** (timezone name, ex: America/Toronto)
+- **vm** (vm label/name)
+- **vm_plan** (vm plan, you might want to change this one since set to shared cpu by default)
