@@ -1,5 +1,9 @@
 # roles/remote/tasks/user.yml
 
+- name: Ensure group "admin" exists
+  ansible.builtin.group:
+    name: admin
+    state: present
 - name: Check if the remote user exists
   command: "id -u {{ main_user }}"
   register: remoteuser_check
