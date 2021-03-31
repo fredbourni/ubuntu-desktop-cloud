@@ -50,7 +50,7 @@ You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/mai
 
 ### Example
 ```
-ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a project=remote sa_key=service-account-key.json main_user=yourusername main_pass='p4ssw0rd'"
+ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a project=yourgcpproject sa_key=service-account-key.json main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
 ### Variables
@@ -66,7 +66,6 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 
 #### Optional
 
-- **address** (ip address object name)
 - **disk** (disk object name)
 - **gcp_cred_kind** (authentication for creating objects)
 - **firewall** (firewall object name)
