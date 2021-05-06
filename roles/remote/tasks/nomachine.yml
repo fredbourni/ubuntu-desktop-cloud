@@ -7,7 +7,7 @@
   changed_when: nomachine_check_installed.rc == 1
 - name: Download nomachine
   get_url:
-    url: "https://download.nomachine.com/download/7.0/Linux/nomachine_7.0.211_4_amd64.deb"
+    url: "{{ nomachine_deb }}"
     dest: /tmp/nomachine.deb
   when: nomachine_check_installed.rc == 1
 - name: Install nomachine

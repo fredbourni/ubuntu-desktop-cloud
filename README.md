@@ -69,6 +69,7 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 - **disk** (disk object name)
 - **gcp_cred_kind** (authentication for creating objects)
 - **firewall** (firewall object name)
+- **nomachine_deb** (deb installation package download url)  
 - **reboot** (skip reboot if set to false)  
 - **timezone** (timezone name, ex: America/Toronto)  
 - **vm** (virtual machine object name)
@@ -106,6 +107,7 @@ ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-v
 
 - **image** (AWS AMI id)
 - **instance_type** (instance type)
+- **nomachine_deb** (deb installation package download url)  
 - **reboot** (skip reboot if set to false)
 - **security_group_name** (security group object name)
 - **timezone** (timezone name, ex: America/Toronto)
@@ -149,6 +151,7 @@ ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-va
 - **image_sku** (os image SKU)
 - **image_version** (os image version)
 - **network_interface** (network interface object name)
+- **nomachine_deb** (deb installation package download url)  
 - **public_ip** (public IP object name)
 - **reboot** (skip reboot if set to false)  
 - **security_group** (security group object name)
@@ -190,6 +193,7 @@ ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "re
 #### Optional
 
 - **image** (Digital Ocean OS image name)
+- **nomachine_deb** (deb installation package download url)  
 - **reboot** (skip reboot if set to false)  
 - **timezone** (timezone name, ex: America/Toronto)
 - **vm** (vm object name)
@@ -224,6 +228,7 @@ ansible-playbook linode.yml -v --user=root --private-key ~/.ssh/key --extra-vars
 #### Optional
 
 - **image** (Linode image name)
+- **nomachine_deb** (deb installation package download url)  
 - **reboot** (skip reboot if set to false)  
 - **timezone** (timezone name, ex: America/Toronto)
 - **vm** (vm label/name)
