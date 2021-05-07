@@ -5,8 +5,9 @@
   gather_facts: false
   vars:
     disk: "remote-root"
-    gcp_cred_kind: "serviceaccount"
     firewall: "nomachine-allow"
+    gcp_cred_kind: "serviceaccount"
+    ssh_wait: 1200
     vm: "remote"
     vm_size: 16
     vm_type: "e2-standard-4"
@@ -69,7 +70,7 @@
       register: instance
 
     - name: Wait for SSH to come up
-      wait_for: host={{ instance.networkInterfaces[0]['accessConfigs'][0]['natIP'] }} port=22 delay=30 timeout=640
+      wait_for: host={{ instance.networkInterfaces[0]['accessConfigs'][0]['natIP'] }} port=22 delay=30 timeout={{ ssh_wait }}
 
     - name: Add host to groupname
       add_host: hostname={{ instance.networkInterfaces[0]['accessConfigs'][0]['natIP'] }} groupname=gcp_instances

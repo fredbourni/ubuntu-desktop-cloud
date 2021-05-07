@@ -4,9 +4,10 @@
   hosts: localhost
   gather_facts: false
   vars:
+    image: "ubuntu-20-04-x64"
+    ssh_wait: 1200
     vm: "remote"
     vm_size: "138" # 50GB Disk, 16GB RAM
-    image: "ubuntu-20-04-x64"
 
   tasks:
     - name: Create a new droplet
@@ -22,7 +23,7 @@
       register: instance
 
     - name: Wait for SSH to come up
-      wait_for: host={{ instance.data.ip_address }} port=22 delay=30 timeout=640
+      wait_for: host={{ instance.data.ip_address }} port=22 delay=30 timeout={{ ssh_wait }}
 
     - name: Add host to groupname
       add_host: hostname={{ instance.data.ip_address }} groupname=do_instances

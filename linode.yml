@@ -7,6 +7,7 @@
     vm: "remote"
     image: "linode/ubuntu20.04"
     vm_plan: "g6-standard-6"
+    ssh_wait: 1200
 
   tasks:
 
@@ -24,7 +25,7 @@
       register: instance
 
     - name: Wait for SSH to come up
-      wait_for: host={{ instance.instance.ipv4[0] }} port=22 delay=30 timeout=640
+      wait_for: host={{ instance.instance.ipv4[0] }} port=22 delay=30 timeout={{ ssh_wait }}
 
     - name: Add host to groupname
       add_host: hostname={{ instance.instance.ipv4[0] }} groupname=linode_instances
