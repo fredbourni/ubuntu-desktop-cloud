@@ -1,6 +1,6 @@
 --- # roles/remote/vars/main.yml
 
 main_user_update_pass: on_create
-nomachine_deb: "https://download.nomachine.com/download/7.4/Linux/nomachine_7.4.1_1_amd64.deb"
+nomachine_deb: "https://download.nomachine.com/download/7.5/Linux/nomachine_7.5.2_1_amd64.deb"
 reboot: true
 timezone: UTC
