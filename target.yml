@@ -1,0 +1,6 @@
+- name: Manage new instances
+  hosts: all
+  connection: ssh
+  become: True
+  roles:
+    - remote
