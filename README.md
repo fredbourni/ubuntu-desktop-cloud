@@ -37,14 +37,15 @@ To get a default Ubuntu setup without any extra software installed, simply skip 
 ```
 ansible-playbook --skip-tags package [...]
 ```
-You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/main.yml) file.
 
 To skip only cloud related tooling:
 ```
 ansible-playbook --skip-tags package-cloud [...]
 ```
 
-## Install locally or on specific hosts?
+You may also skip any other tags in the [main tasks YAML](roles/remote/tasks/main.yml) file.
+
+## Install locally or on specific hosts
 
 Please use the [target](target.yml) playbook, for example:
 
@@ -52,15 +53,17 @@ Please use the [target](target.yml) playbook, for example:
 ansible-playbook target.yml -v --inventory "192.168.1.234," --extra-vars "ansible_user=sshuser ansible_ssh_pass=sshp4ss ansible_sudo_pass=sshp4ss main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
-## Amazon Web Services (AWS)
+## Cloud Providers
 
-### Requirements
+### Amazon Web Services (AWS)
+
+#### Requirements
 
 - Boto and Boto3 libraries (`pip install boto boto3`)
 - [EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#prepare-key-pair)
 - [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html) (default one is OK)
 
-### Example
+#### Example
 ```
 export AWS_ACCESS_KEY_ID='AAAA000AAAAAA0AAAAA0'
 export AWS_SECRET_ACCESS_KEY='aa0aaaa0aa00aaa00aa00a0aaa0aaaaaaaaa0aa0'
@@ -68,9 +71,9 @@ export AWS_SECRET_ACCESS_KEY='aa0aaaa0aa00aaa00aa00a0aaa0aaaaaaaaa0aa0'
 ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-vars "region=ca-central-1 keypair=remote vpc_id=vpc-aa0000a0 main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
-### Variables
+#### Variables
 
-#### Mandatory
+##### Mandatory
 
 - **keypair** (SSH key pair name)
 - **main_user** (main username)
@@ -79,7 +82,7 @@ ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-v
 - **vpc_id** (vpc object id)
 
 
-#### Optional
+##### Optional
 
 - **image** (AWS AMI id)
 - **instance_type** (instance type)
@@ -88,25 +91,25 @@ ansible-playbook aws.yml -v -u ubuntu --private-key ~/.ssh/private.pem --extra-v
 - **security_group_name** (security group object name)
 - **timezone** (timezone name, ex: America/Toronto)
 
-## Digital Ocean
+### Digital Ocean
 
-### Requirements
+#### Requirements
 
 - Digitalocean collection (`ansible-galaxy collection install community.digitalocean`)
 - [Access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
 - [Account SSH keys](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)
 
 
-### Example
+#### Example
 ```
 export DO_OAUTH_TOKEN='aaa0000000000a0a0a000a00aaa000aaaa0a0000a0a00aaa0a00a0000a000aaa'
 
 ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "region=tor1 ssh_key_id=000000000 main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
-### Variables
+#### Variables
 
-#### Mandatory
+##### Mandatory
 
 - **main_user** (main username)
 - **main_pass** (main user password)
@@ -114,7 +117,7 @@ ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "re
 - **region** (DigitalOcean region)
 - **ssh_key_id** (global SSH key ID)
 
-#### Optional
+##### Optional
 
 - **image** (Digital Ocean OS image name)
 - **nomachine_deb** (deb installation package download url)  
@@ -123,23 +126,23 @@ ansible-playbook do.yml -v --user=root --private-key ~/.ssh/key --extra-vars "re
 - **vm** (vm object name)
 - **vm_size** (vm size id)
 
-## Google Cloud Platform (GCP)
+### Google Cloud Platform (GCP)
 
-### Requirements
+#### Requirements
 
 - Python Google Authentication Library (`pip install google-auth`)
 - Python HTTP requests library (`pip install requests`)
 - [GCP project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
 - [Service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) with proper permissions and JSON key 
 
-### Example
+#### Example
 ```
 ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a project=yourgcpproject sa_key=service-account-key.json main_user=yourusername main_pass='p4ssw0rd'"
 ```
 
-### Variables
+#### Variables
 
-#### Mandatory
+##### Mandatory
 
 - **main_user** (main username)
 - **main_pass** (main user password)
@@ -148,7 +151,7 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 - **sa_key** (service account JSON key path)
 - **zone** (GCP zone)
 
-#### Optional
+##### Optional
 
 - **disk** (disk object name)
 - **gcp_cred_kind** (authentication for creating objects)
@@ -160,24 +163,24 @@ ansible-playbook gcp.yml -v --extra-vars "region=northamerica-northeast1 zone=a 
 - **vm_size** (hard disk size in GB)
 - **vm_type** (instance type)
 
-## Linode
+### Linode
 
-### Requirements
+#### Requirements
 
 - Python library for Linode API (`pip install linode_api4`)
 - [API access token](https://www.linode.com/docs/products/tools/linode-api/guides/get-access-token/)
 - SSH public/private keys
 
-### Example
+#### Example
 ```
 export LINODE_ACCESS_TOKEN='00000aa00a00aaaa0a00a0a0aa0000a0aa0000aa000a0a0000000000aaa0aaa0'
 
 ansible-playbook linode.yml -v --user=root --private-key ~/.ssh/key --extra-vars "region=ca-central root_pass='r00tp4ss#' pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd#'"
 ```
 
-### Variables
+#### Variables
 
-#### Mandatory
+##### Mandatory
 
 - **main_user** (main username)
 - **main_pass** (main user password)
@@ -185,7 +188,7 @@ ansible-playbook linode.yml -v --user=root --private-key ~/.ssh/key --extra-vars
 - **region** (Linode region)
 - **root_pass** (root user password)
 
-#### Optional
+##### Optional
 
 - **image** (Linode image name)
 - **nomachine_deb** (deb installation package download url)  
@@ -194,16 +197,16 @@ ansible-playbook linode.yml -v --user=root --private-key ~/.ssh/key --extra-vars
 - **vm** (vm label/name)
 - **vm_plan** (vm plan, you might want to change this one since set to shared cpu by default)
 
-## Microsoft Azure
+### Microsoft Azure
 
-### Requirements
+#### Requirements
 
 - Azure Libraries (`pip install -r <(curl -s https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt)`)
 - [Resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups)
 - [Azure AD application and a service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
 - SSH public/private keys
 
-### Example
+#### Example
 ```
 export AZURE_CLIENT_ID='0000a000-a000-0000-00a0-aa000000aa00'
 export AZURE_SECRET='-secret-'
@@ -213,9 +216,9 @@ export AZURE_TENANT='000a0aa0-0000-0a0a-aa0a-000a0aaaa00a'
 ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-vars "resource_group=remoterg storage_account=remotesa pub_key=~/.ssh/key.pub main_user=yourusername main_pass='p4ssw0rd#'"
 ```
 
-### Variables
+#### Variables
 
-#### Mandatory
+##### Mandatory
 
 - **main_user** (main username)
 - **main_pass** (main user password)
@@ -224,7 +227,7 @@ ansible-playbook azure.yml -v --user=azadmin --private-key ~/.ssh/key --extra-va
 - **resource_group** (resource group object name)
 - **storage_account** (storage account object name, needs to be unique across azure so pick wisely)
 
-#### Optional
+##### Optional
 
 - **admin_user** (admin username)
 - **disk_size** (disk size in GB)
