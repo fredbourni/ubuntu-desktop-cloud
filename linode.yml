@@ -7,7 +7,7 @@
     vm: "remote"
     image: "linode/ubuntu20.04"
     vm_plan: "g6-standard-6"
-    ssh_wait: 1200
+    ssh_wait: 600
 
   tasks:
 

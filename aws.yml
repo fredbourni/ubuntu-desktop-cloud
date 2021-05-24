@@ -8,7 +8,7 @@
     image: "ami-02e44367276fe7adc"
     instance_type: "r5.large"
     security_group_name: "nomachine"
-    ssh_wait: 1200
+    ssh_wait: 600
     vm: "remote"
 
   tasks:

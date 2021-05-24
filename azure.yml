@@ -14,7 +14,7 @@
     network_interface: "remotenic"
     public_ip: "remotepublicip"
     security_group: "remotesecgroup"
-    ssh_wait: 1200
+    ssh_wait: 600
     storage_type: "Standard_LRS"
     subnet: "remotesubnet"
     subnet_cidr: "10.10.0.0/24"

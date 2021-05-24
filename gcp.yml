@@ -7,7 +7,7 @@
     disk: "remote-root"
     firewall: "nomachine-allow"
     gcp_cred_kind: "serviceaccount"
-    ssh_wait: 1200
+    ssh_wait: 600
     vm: "remote"
     vm_size: 16
     vm_type: "e2-standard-4"
